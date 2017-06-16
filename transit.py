@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 def read_data(filename):
     # read in data
     t, f = np.loadtxt('data/' + filename, unpack=True)
-    #close the file
-    f.close()
     return  t, f
 
 def plot_data(filename):
