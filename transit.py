@@ -12,10 +12,10 @@ def read_data(filename):
 
 def plot_data(filename):
     t, f = read_data(filename)
-    fig = plt.scatter(t,  f)
+    fig = plt.scatter(t,  f, color='k', s=6)
     plt.xlabel('Time from mid-transit [days]')
     plt.ylabel("Relative Flux [PPM]")
-    plt.show()
+    #plt.show()
 
 def trapezoid(pars, t):
 	t0, T, tau, depth = pars
@@ -56,6 +56,20 @@ def vary_t0(t0s):
 	 plt.plot(t, trapezoid([t0, 1., 0.2, 200], t))
 	plt.show()
 
+def plot_fit(file, param_guess):
+	t,f = read_data(file)
+	plt.subplot(211)
+	plt.plot(t, trapezoid(param_guess,t), c='r')
+	plot_data(file)
+	plt.subplot(212)
+	f = f - trapezoid(param_guess,t)
+	fig = plt.scatter(t,  f, color='k', s=6)
+	fig = plt.plot([t[0],t[-1]],  [0,0], color='lime')
+	plt.xlabel('Time from mid-transit [days]')
+	plt.ylabel("Residuals")
+
+	plt.tight_layout()
+	plt.show()
 
 
 
@@ -69,7 +83,8 @@ if __name__ == "__main__":
     plt.ylim(-250,50)
     plt.show()
     """
-    
+    param_guess = [0, 0.8, 0.2, 200]
+    plot_fit(7016.01, param_guess)
 
 
 
