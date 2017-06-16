@@ -3,6 +3,7 @@
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.optimize
 
 # returns data fom specified file
 def read_data(filename):
@@ -71,8 +72,12 @@ def plot_fit(file, param_guess):
 	plt.tight_layout()
 	plt.show()
 
+def __obj_func(pars, t, f):
+	return np.sum((f - trapezoid(pars, t))**2)
 
-
+def fit_trapezoid(file, method = 'Nelder-Mead'):
+	t,f = read_data(file)
+	return scipy.optimize.minimize(__obj_func, [0, 0.8, 0.2, 200], args=(t, f), method = method)
 
 if __name__ == "__main__":
     #plot_data(sys.argv[1])
@@ -83,8 +88,9 @@ if __name__ == "__main__":
     plt.ylim(-250,50)
     plt.show()
     """
-    param_guess = [0, 0.8, 0.2, 200]
-    plot_fit(7016.01, param_guess)
+    fit = fit_trapezoid(7016.01, method = 'Nelder-Mead')
+    print(fit)
+    plot_fit(7016.01, fit.x)
 
 
 
