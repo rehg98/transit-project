@@ -15,7 +15,7 @@ def plot_data(filename):
     fig = plt.scatter(t,  f)
     plt.xlabel('Time from mid-transit [days]')
     plt.ylabel("Relative Flux [PPM]")
-    plt.plot()
+    plt.show()
 
 if __name__ == "__main__":
     plot_data(sys.argv[1])
